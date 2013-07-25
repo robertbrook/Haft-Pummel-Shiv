@@ -1,20 +1,58 @@
-var Day = Backbone.Model.extend({
+var WhipDay = Backbone.Model.extend({
+ 
+});
+
+var CalendarDay = Backbone.Model.extend({
  
 });
   
-var Days = Backbone.Collection.extend({
-    model: Day,
+var WhipDays = Backbone.Collection.extend({
+    model: WhipDay,
     url: "http://lordswhip.herokuapp.com/index.json"
 });
 
 var CalendarDays = Backbone.Collection.extend({
-    model: CalendarDaysDay,
-    url: "http://services.parliament.uk/calendar/all.rss"
+    model: CalendarDay,
+    url: "http://services.parliament.uk/calendar/all.rss",
+	
+	parse: function(data) {
+		var parsed=[];
+		$(data).find('item').each(function (index) {
+			var title = $(this).find('title').text();
+			var link = $(this).find('link').text();
+			var guid = $(this).find('guid').text();
+			var author = $(this).find('author').text();
+			var description = $(this).find('description').text();
+			parsed.push({ title: title,
+				link: link,
+				guid: guid,
+				author: author,
+				description: description });
+    });
+    return parsed;
+    },
+		fetch: function (options) {
+        options = options || {};
+        options.dataType = "xml";
+        return Backbone.Collection.prototype.fetch.call(this, options);
+    }
+    
 });
 
-var days = new Days;
+var days = new CalendarDays;
 
 days.fetch({success: function(){
-    console.log(days);
-    document.write(JSON.stringify(days));
+	days.each(function(this_day) {
+    console.log(this_day);
+    }
+    )
+    //document.write(JSON.stringify(days));
 }});
+
+
+var ListView = Backbone.View.extend({
+    
+  });
+
+var listView = new ListView();
+  
