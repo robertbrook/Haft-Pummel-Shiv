@@ -49,6 +49,13 @@ var days = new CalendarDays;
 days.fetch({success: function(){
 	days.each(function(this_day) {
     console.log(this_day);
+    
+    $('ul#days').append(
+    $('<li>').append(
+        $('<p>').attr('class', 'description').append(this_day.attributes.description),
+        $('<a>').attr('href',this_day.attributes.link).append(
+            $('<span>').attr('class', 'tab').append(this_day.attributes.title)
+))); 
     }
     )
     //document.write(JSON.stringify(days));
