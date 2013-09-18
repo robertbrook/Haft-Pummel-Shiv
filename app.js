@@ -1,6 +1,10 @@
 var Day = Backbone.Model.extend({
  
 });
+
+var CalendarDaysDay = Backbone.Model.extend({
+ 
+});
   
 var Days = Backbone.Collection.extend({
     model: Day,
@@ -12,9 +16,11 @@ var CalendarDays = Backbone.Collection.extend({
     url: "http://services.parliament.uk/calendar/all.rss"
 });
 
-var days = new Days;
+var mydays = new Days;
 
-days.fetch({success: function(){
-    console.log(days);
-    document.write(JSON.stringify(days));
+mydays.fetch({success: function(){
+    console.log(mydays);
+    document.write(JSON.stringify(mydays));
 }});
+
+
